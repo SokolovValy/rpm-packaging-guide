@@ -1,7 +1,7 @@
 [[introduction]]
-= Introduction
+= Вступление
 
-The RPM Packaging Guide documents:
+Руководство по упаковке RPM пакетов:
 
 How to prepare source code for packaging into an RPM.:: This is for people with
 no background in software development. See
@@ -23,48 +23,62 @@ this document].
 endif::community[]
 
 [[document-conventions]]
-== Document Conventions
+== Подготовка к сборке и обзор spec-файла 
 
-The document uses the following conventions:
+Для начала подготовим систему для сборки rpm пакета. Обязательно установим пакет rpm-build. Без него будет недоступна команда rpmbuild. Наряду с ним, по зависимостям установидся ещё несколько пакетов, используемых при сборке. 
 
-* Command output and contents of text files, including source code, are placed
-in blocks:
+А что собственно из себя представляет RPM пакет? RPM-пакеты делятся на пакеты с исходниками - src.rpm и пакеты, готовые к установке - %{arch}.rpm. В src.rpm пакетах содержится исходный тарболл (исходник программы), какие-либо другие исходники, пачти и самый главный spec-файл, который управляет процессом сборки. Все эти файлы упакованы в cpio архив. Когда вы пытаетесь войти в src.rpm пакет при помощи файлового менеджера mc, вы его увидите. Также в пакете присутствует некоторые файлы с информацией.
+
+В %{arch}.rpm-пакетах содержится cpio-архив с файлами, которые после установки разложатся по соответствующим каталогам, файлы информации и установочные скрипты.
+
+Собирать пакеты можно из-под любого пользователя. Делать это из-под root'а не рекомендуется, т.к. есть вероятность, что корнем для секции инсталляции окажется каталог / и тогда команда rm -rf %{buildroot} уничтожит все на свете. Также бывает, что «кривые» пакеты не правильно выполняют инсталляцию, и ставятся не во временный каталог, а прямо куда-нибудь в %{_prefix} (/usr). Часть файлов будет потеряна, хотя на работоспособности пакета на этой машине понятное дело это не скажется.
+
+Что нужно сделать, чтобы можно было собирать пакеты из-под обычного пользователя? Первым делом нужно создать в своём домашнем каталоге файл директорию rpmbuild со следующей структурой:
 +
 [source,bash]
 ----
-$ tree ~/rpmbuild/
-/home/user/rpmbuild/
+~/rpmbuild/
 |-- BUILD
+|-- BUILDROOT
 |-- RPMS
-
-[command output trimmed]
+|   |-- i586
+|   |-- x86_64
+|    '-- noarch
+|-- SOURCES
+|-- SPECS
+'-- SRPMS
 ----
+Каталоги BUILD, RPMS, SOURCES, SPECS, SRPMS вам необходимо создать вручную, подкаталоги каталога RPMS должны создаться автоматически во время сборки в зависимости от архитектуры.
+
+Теперь давайте посмотрим что из себя представляет самый главный файл rpm-пакета, spec-файл. Для примера возьмём его из пакета stardict. Этот пакет хорошо подходит для обучения, так как в нем есть несколько тарболов (исходник программы, упакованный tar’ом), получается несколько пакетов и есть такая вещь, как схемы. Обычно spec-файл имеет такое же имя, как и сам пакет (stardict.spec). Однако вы можете добавить версию пакета (stardict-2.spec), удобно если вы пытаетесь поддерживать несколько веток программ. Можно даже дать какое-нибудь другое название, однако это мягко говоря не удобно.
+
+Итак, содержимое файла stardict.spec приведено ниже. Мы сразу будем вставлять комментарии после определенных секций, но если вы соедините все блоки в один и тот же файл, то получите полноценный stardict.spec.
 +
 [source,txt]
 ----
-Name:           bello
-Version:
-Release:        1%{?dist}
-Summary:
-
-[file contents trimmed]
+Summary:        StarDict dictionary
+Name:           stardict
+Version:        2.4.8
+Release:        4
+License:        GPL
+URL:            http://stardict.sourceforge.net
+Group:          User Interface/Desktops
+Source0:        %{name}-%{version}.tar.bz2
+Source1:        %{name}-tools-%{version}.tar.bz2
+Patch0:         %{name}-2.4.8-desktop.patch
 ----
+
+Summary — краткое описание пакета, Name — название, Version — версия, Release — релиз. Последним трем тегам соответствуют макроопределения %{name} , %{version} , %{release} . Их часто используют в дальнейшем. Name и Version обычно совпадает с название тарбола. Если же они отличаются, то в принципе ничего страшного, но придётся в некоторых местах spec-файла действовать нестандартными методами. 
+
 +
-[source,python]
+[source,txt]
 ----
 #!/usr/bin/env python
 
 print("Hello World")
 ----
 
-* Topics of interest or vocabulary terms are referred to either as URLs to their
-respective documentation or website, in **bold**, or in __italics__.
-ifdef::community[]
-The first occurrences of some terms link to their respective documentation.
-endif::community[]
-
-*   Names of utilities, commands, and things normally found in code are written in
-``monospace`` font.
+* Topics o
 
 ifdef::community[]
 include::contributing-to-this-guide.adoc[leveloffset=+1]
