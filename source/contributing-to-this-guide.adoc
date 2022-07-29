@@ -1,10 +1,10 @@
 [[contributing-to-this-guide]]
 = Contributing to this guide
 
-You can contribute to this guide by submitting an issue or a pull request on
-https://github.com/redhat-developer/rpm-packaging-guide[the GitHub repository].
+Вы можете внести свой вклад в это руководство, отправив сообщение о проблеме или запрос на извлечение наn
+https://github.com/redhat-developer/rpm-packaging-guide[ GitHub репозиторий].
 
-Both forms of contribution are greatly appreciated and welcome.
+Обе формы вклада высоко ценятся и приветствуются.
 
-Feel free to file an issue ticket with feedback, submit a pull request
-https://github.com/redhat-developer/rpm-packaging-guide[on GitHub], or both!
+Не стесняйтесь подавать заявку на решение проблемы с обратной связью, отправлять запрос на извлечение
+https://github.com/redhat-developer/rpm-packaging-guide[на GitHub] или и то, и другое!
