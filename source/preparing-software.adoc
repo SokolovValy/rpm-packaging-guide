@@ -1,27 +1,21 @@
 [[preparing-software-for-packaging]]
-= Preparing Software for Packaging
+= Подготовка программного обеспечения для упаковки
 
-This chapter is about source code and creating software, which are a necessary
-background for an RPM Packager.
+Эта глава посвящена исходному коду и созданию программного обеспечения, которые являются необходимой основой для RPM-упаковщика.
 
 [[what-is-source-code]]
-== What is Source Code?
+== Что такое Исходный код?
 
-**Source code** is human-readable instructions to the computer, which describe
-how to perform a computation. Source code is expressed using a
-ifdef::community[https://en.wikipedia.org/wiki/Programming_language[programming language]]
+**Исходный код ** - это понятные для человека инструкции к компьютеру, в которых описывается, как выполнить вычисления. Исходный код выражается с помощью
+ifdef::community[https://en.wikipedia.org/wiki/Programming_language[языка программирования]]
 ifdef::rhel[programming language]
 .
 
-This tutorial features three versions of the ``Hello World`` program, each
-written in a different programming language. Programs written in these three
-different languages are packaged differently, and cover three major use cases of
-an RPM packager.
+В этом руководстве представлены три версии  ``Hello World`` программы, каждая из которых написана на разных языках программирования. Программы, написанные на этих трех разных языках, упаковываются по-разному и охватывают три основных варианта использования RPM-упаковщика.
 
-NOTE: There are thousands of programming languages. This document features only
-three of them, but they are enough for a conceptual overview.
+NOTE: Существуют тысячи языков программирования. В этом документе представлены только три из них, но их достаточно для концептуального обзора.
 
-``Hello World`` written in https://www.gnu.org/software/bash/[bash]:
+``Hello World`` написано на https://www.gnu.org/software/bash/[bash]:
 
 ``bello``
 
@@ -33,7 +27,7 @@ printf "Hello World\n"
 
 ----
 
-``Hello World`` written in https://www.python.org/[Python]:
+``Hello World`` написано на https://www.python.org/[Python]:
 
 ``pello.py``
 
@@ -45,7 +39,7 @@ print("Hello World")
 
 ----
 
-``Hello World`` written in
+``Hello World`` написано на
 ifdef::community[https://en.wikipedia.org/wiki/C_%28programming_language%29[C]]
 ifdef::rhel[C]
 :
@@ -63,96 +57,76 @@ int main(void) {
 
 ----
 
-The purpose of every one of the three programs is to output ``Hello World`` on
-the command line.
+Целью каждой из трех программ является вывод ``Hello World`` в
+ командной строке.
 
-NOTE: Knowing how to program is not necessary for a software packager, but is
-helpful.
+NOTE: Знание того, как программировать, не обязательно для упаковщика программного обеспечения, но полезно.
 
 [[how-programs-are-made]]
-== How Programs Are Made
+== Как создаются программы
 
-There are many methods by which human-readable source code becomes machine code
-- instructions the computer follows to actually execute the program. However,
-all methods can be reduced to these three:
+Существует множество методов, с помощью которых читаемый человеком исходный код становится машинным кодом - инструкциями, которым компьютер следует для фактического выполнения программы. Однако все методы можно свести к этим трем:
 
-1. The program is natively compiled.
-2. The program is interpreted by raw interpreting.
-3. The program is interpreted by byte compiling.
+1. Программа изначально скомпилирована..
+2. Программа интерпретируется с помощью необработанной интерпретации.
+3. Программа интерпретируется путем байтовой компиляции.
 
 [[natively-compiled-code]]
-=== Natively Compiled Code
+=== Изначально скомпилированный код
 
-**Natively compiled** software is software written in a programming language
-that compiles to machine code, with a resulting binary executable file. Such
-software can be run stand-alone.
+**Изначально скомпилированное** программное обеспечение - это программное обеспечение, написанное на языке программирования, которое компилируется в машинный код с результирующим двоичным исполняемым файлом. Такое программное обеспечение можно запускать автономно.
 
-RPM packages built this way are
-ifdef::community[https://en.wikipedia.org/wiki/Microarchitecture[architecture]]
+Пакеты RPM, созданные таким образом, зависят от
+ifdef::community[https://en.wikipedia.org/wiki/Microarchitecture[архитектуры]]
 ifdef::rhel[architecture]
--specific. This means that if you compile such software on a computer that uses
-a 64-bit (x86_64) AMD or Intel processor, it
-will not execute on a 32-bit (x86) AMD or Intel processor. The resulting package
-will have architecture specified in its name.
+ Это означает, что если вы скомпилируете такое программное обеспечение на компьютере, использующем 64-разрядный (x86_64) процессор AMD или Intel, оно не будет выполняться на 32-разрядном (x86) процессоре AMD или Intel. В названии результирующего пакета будет указана архитектура.
 
 [[interpreted-code]]
-=== Interpreted Code
+=== Интерпретируемый код
 
-Some programming languages, such as https://www.gnu.org/software/bash/[bash] or
-https://www.python.org/[Python], do not compile to machine code. Instead, their
-programs' source code is executed step by step, without prior transformations,
-by a
-ifdef::community[https://en.wikipedia.org/wiki/Interpreter_%28computing%29[Language Interpreter]]
+Некоторые языки программирования, такие как https://www.gnu.org/software/bash/[bash] или https://www.python.org/[Python], не компилируются в машинный код. Вместо этого исходный код их программ выполняется шаг за шагом, без предварительных преобразований,
+ifdef::community[https://en.wikipedia.org/wiki/Interpreter_%28computing%29[языковым интерпритатором]]
 ifdef::rhel[Language Interpreter]
-or a Language Virtual Machine.
+или языковой виртуальной машиной.
 
-Software written entirely in interpreted programming languages is not
-ifdef::community[https://en.wikipedia.org/wiki/Microarchitecture[architecture]]
+Программное обеспечение, написанное полностью на интерпретируемых языках программирования, не зависит от
+ifdef::community[https://en.wikipedia.org/wiki/Microarchitecture[архитектуры]]
 ifdef::rhel[architecture]
--specific. Hence, the resulting RPM Package will have string ``noarch`` in its name.
+Следовательно, результирующий пакет RPM будет иметь строку ``noarch`` в своем названии.
 
-// There are two types of interpreted languages: byte-compiled and raw-interpreted. The program build process for these two types is different.
+Существует два типа интерпретируемых языков: *байт-скомпилированные* и *необработанные интерпретируемые*. Процесс сборки программ для этих двух типов отличается.
 
-Interpreted languages are either *byte-compiled* or *raw-interpreted*. These two
-types differ in program build process and in packaging procedure.
+//Interpreted languages are either *byte-compiled* or *raw-interpreted*. These two
+//types differ in program build process and in packaging procedure.
 
-==== Raw-interpreted programs
-Raw-interpreted language programs do not need to be compiled at all, they are
-directly executed by the interpreter.
+==== Программы с интерпретацией Raw
+Программы на языке с интерпретацией Raw вообще не нужно компилировать, они выполняются непосредственно интерпретатором.
 
-==== Byte-compiled programs
-Byte-compiled languages need to be compiled into byte code, which is then
-executed by the language virtual machine.
+==== Программы, скомпилированные в байтах
+Языки, скомпилированные в байтах, должны быть скомпилированы в байтовый код, который затем выполняется виртуальной машиной языка.e.
 
-NOTE: Some languages give a choice: they can be raw-interpreted or byte-compiled.
+NOTE: Некоторые языки предоставляют выбор: они могут быть интерпретированы в формате raw или скомпилированы в байтах.
 
 // This difference reflects on the packaging procedure. Some languages give a choice: they can be raw-interpreted or byte-compiled.
 
 // Software written entirely in interpreted programming languages is not https://en.wikipedia.org/wiki/Microarchitecture[architecture]-specific. Hence, the resulting RPM Package will have string ``noarch`` in its name.
 
 [[building-software-from-source]]
-== Building Software from Source
+== Создание программного обеспечения из исходного кода
 
-This section explains building software from its source code.
+В этом разделе объясняется сборка программного обеспечения на основе его исходного кода.
 
-* For software written in compiled languages, the source code goes through a
-**build** process, producing machine code. This process, commonly called
-**compiling** or **translating**, varies for different languages. The resulting
-built software can be **run** or "**executed**", which makes computer perform
-the task specified by the programmer.
-* For software written in raw interpreted languages, the source code is not
-built, but executed directly.
-* For software written in byte-compiled interpreted languages, the source code
-is compiled into byte code, which is then executed by the language virtual
-machine.
+* Для программного обеспечения, написанного на скомпилированных языках, исходный код проходит процесс *сборки*, создавая машинный код. Этот процесс, обычно называемый *компиляцией* или *переводом*, различается для разных языков. Полученное встроенное программное обеспечение может быть *запущено* или "*выполнено*", что заставляет компьютер выполнять задачу, указанную программистом.
+* Для программного обеспечения, написанного на необработанных интерпретируемых языках, исходный код не создается, а выполняется напрямую.
+* Для программного обеспечения, написанного на интерпретируемых языках с байтовой компиляцией, исходный код компилируется в байтовый код, который затем выполняется виртуальной машиной языка.
 
 [[natively-compiled-code-building-software-from-source]]
-=== Natively Compiled Code
+=== Изначально скомпилированный код
 
-In this example, you will build the ``cello.c`` program written in the
+В этом примере вы создадите ``cello.c`` программу, написанную на языке
 ifdef::community[https://en.wikipedia.org/wiki/C_%28programming_language%29[C]]
 ifdef::rhel[C]
-language into an executable.
+в исполняемый файл.
 
 ``cello.c``
 
@@ -168,13 +142,12 @@ int main(void) {
 ----
 
 [[manual-building]]
-==== Manual Building
+==== Ручная сборка
 
-Invoke the
+Вызовите компилятор
 ifdef::community[https://en.wikipedia.org/wiki/C_%28programming_language%29[C]]
 ifdef::rhel[C]
-compiler from the GNU
-Compiler Collection (https://gcc.gnu.org/[GCC]) to compile the source code into binary:
+из коллекции компиляторов GNU  (https://gcc.gnu.org/[GCC]) чтобы скомпилировать исходный код в двоичный файл:
 
 [source,bash]
 ----
@@ -182,7 +155,7 @@ gcc -g -o cello cello.c
 
 ----
 
-Execute the resulting output binary ``cello``.
+Выполните результирующий двоичный файл вывода``cello``.
 
 [source,bash]
 ----
@@ -191,17 +164,14 @@ Hello World
 
 ----
 
-That is all. You have built and ran natively compiled software from source code.
+Вот и все. Вы создали и запустили изначально скомпилированное программное обеспечение из исходного кода.
 
-==== Automated Building
+==== Автоматическая сборка
 
-Instead of building the source code manually, you can automate the building.
-This is a common practice used by large-scale software. Automating building is
-done by creating a ``Makefile`` and then running the
+Вместо того, чтобы создавать исходный код вручную, вы можете автоматизировать сборку. Это обычная практика, используемая в крупномасштабном программном обеспечении. Автоматизация сборки осуществляется путем создания  ``Makefile`` и затем запускаем
 http://www.gnu.org/software/make/[GNU ``make``] utility.
 
-To set up automated building, create a file named ``Makefile`` in the same
-directory as ``cello.c``:
+Чтобы настроить автоматическую сборку, создайте файл с именем  ``Makefile`` в том же каталоге, что и``cello.c``:
 
 ``Makefile``
 
@@ -215,7 +185,7 @@ clean:
 
 ----
 
-Now to build the software, simply run ``make``:
+Теперь, чтобы собрать программу, просто запустите ``make``:
 
 [source,bash]
 ----
@@ -224,7 +194,7 @@ make: 'cello' is up to date.
 
 ----
 
-Since there is already a build present, ``make clean`` it and run ``make`` again:
+Посколько сборка уже создана, ``make clean`` очистит её, а затем снова запустит ``make``:
 
 [source,bash]
 ----
@@ -236,7 +206,7 @@ gcc -g -o cello cello.c
 
 ----
 
-Again, trying to build after another build would do nothing:
+Опять же, попытка сборки после другой сборки ничего не даст:
 
 [source,bash]
 ----
@@ -245,7 +215,7 @@ make: 'cello' is up to date.
 
 ----
 
-Finally, execute the program:
+Наконец, программа выполнится:
 
 [source,bash]
 ----
@@ -254,38 +224,33 @@ Hello World
 
 ----
 
-You have now compiled a program both manually and using a build tool.
+Теперь вы скомпилировали программу как вручную, так и с помощью инструмента сборки.
+
 
 [[interpreted-code-building-software-from-source]]
-=== Interpreted Code
+=== Интерпретируемый код
 
-The next two examples showcase byte-compiling a program written in
-https://www.python.org/[Python] and raw-interpreting a program written in
+
+Следующие два примера демонстрируют байтовую компиляцию программы, написанной на
+https://www.python.org/[Python] и raw - интерпретация программы, написанной на
 https://www.gnu.org/software/bash/[bash].
 
 [NOTE]
 ====
-In the two examples below, the ``#!`` line at the top of the file is known as a
+В двух приведенных ниже примерах``#!`` строка в верхней части файла называется 
 ifdef::community[https://en.wikipedia.org/wiki/Shebang_%28Unix%29[shebang]]
 ifdef::rhel[shebang]
-and is not part of the programming language source code.
+и не является частью исходного кода языка программирования.
 
-The
 ifdef::community[https://en.wikipedia.org/wiki/Shebang_%28Unix%29[shebang]]
 ifdef::rhel[shebang]
-enables using a text file as an executable: the system
-program loader parses the line containing the *shebang* to get a path to the
-binary executable, which is then used as the programming language interpreter.
+позволяет использовать текстовый файл в качестве исполняемого файла: загрузчик системной программы анализирует строку, содержащую *shebang*, чтобы получить путь к двоичному исполняемому файлу, который затем используется в качестве интерпретатора языка программирования.
 ====
 
 [[byte-compiled-code]]
-==== Byte-Compiled Code
+==== Скомпилированный в байт-код
 
-In this example, you will compile the ``pello.py`` program written in Python
-into byte code, which is then executed by the Python language virtual machine.
-Python source code can also be raw-interpreted, but the byte-compiled version is
-faster. Hence, RPM Packagers prefer to package the byte-compiled version for
-distribution to end users.
+В этом примере вы скомпилируете  ``pello.py`` - программу, написанную на Python в виде байт-кода, который затем выполняется виртуальной машиной на языке Python. Исходный код Python также может быть интерпретирован в формате raw, но версия, скомпилированная в байтах, быстрее. Следовательно, упаковщики RPM предпочитают упаковывать версию, скомпилированную в байтах, для распространения среди конечных пользователей.
 
 ``pello.py``
 
@@ -297,17 +262,12 @@ print("Hello World")
 
 ----
 
-Procedure for byte-compiling programs is different for different languages. It
-depends on the language, the language's virtual machine, and the tools and
-processes used with that language.
+Процедура байтовой компиляции программ отличается для разных языков. Это зависит от языка, виртуальной машины языка, а также инструментов и процессов, используемых с этим языком.
 
-NOTE: https://www.python.org/[Python] is often byte-compiled, but not in the way
-described here. The following procedure aims not to conform to the community
-standards, but to be simple. For real-world Python guidelines, see
-https://docs.python.org/2/library/distribution.html[Software Packaging and
-Distribution].
+NOTE: https://www.python.org/[Python] часто компилируется в бай-код, но не так, как описано здесь. Следующая процедура направлена не на то, чтобы соответствовать стандартам сообщества, а на то, чтобы быть простой. Для получения практических рекомендаций по Python см. раздел
+https://docs.python.org/2/library/distribution.html[Упаковка и распространение программного обеспечения].
 
-Byte-compile ``pello.py``:
+Байтовая компиляция ``pello.py``:
 
 [source,bash]
 ----
@@ -318,7 +278,7 @@ pello.pyc: python 2.7 byte-compiled
 
 ----
 
-Execute the byte code in ``pello.pyc``:
+Выполните байт-код в ``pello.pyc``:
 
 [source,bash]
 ----
@@ -328,7 +288,7 @@ Hello World
 ----
 
 [[raw-interpreted]]
-==== Raw Interpreted Code
+==== Необработанный интерпретируемый код
 
 In this example, you will raw-interpret the ``bello`` program written in the
 https://www.gnu.org/software/bash/[bash] shell built-in language.
