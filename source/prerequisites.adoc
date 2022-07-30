@@ -1,30 +1,29 @@
 [[prerequisites]]
-= Prerequisites
+= Необходимые пакеты
 
-To follow this tutorial, you need the packages mentioned below.
+Чтобы следовать этому руководству, вам понадобятся пакеты, упомянутые ниже.
 
 ifdef::community[]
-NOTE: Some of these packages are installed by default on
-https://getfedora.org/[Fedora], https://www.centos.org/[CentOS] and
-https://www.redhat.com/en/technologies/linux-platforms[RHEL]. They are listed
-explicitly to show which tools are used in this guide.
+NOTE: Некоторые из этих пакетов устанавливаются по умолчанию в
+https://getfedora.org/[Fedora], https://www.centos.org/[CentOS] и
+https://www.redhat.com/en/technologies/linux-platforms[RHEL]. 
+Они подробно перечислины, чтобы показать, какие инструменты используются в этом руководстве.
 endif::community[]
 
 ifdef::rhel[]
-NOTE: Some of these packages are installed by default on
-https://www.redhat.com/en/technologies/linux-platforms[RHEL]. They are listed
-explicitly to show which tools are used in this guide.
+NOTE: Некоторые из этих пакетов устанавливаются по умолчанию в
+https://www.redhat.com/en/technologies/linux-platforms[RHEL]. Они подробно перечислины, чтобы показать, какие инструменты используются в этом руководстве.
 endif::rhel[]
 
 ifdef::community[]
-On Fedora, CentOS 8, and RHEL 8:
+В Fedora, CentOS 8, и RHEL 8:
 
 [source,bash]
 ----
 $ dnf install gcc rpm-build rpm-devel rpmlint make python bash coreutils diffutils patch rpmdevtools
 ----
 
-On CentOS 7 and RHEL 7:
+В CentOS 7 и RHEL 7:
 
 [source,bash]
 ----

@@ -1,45 +1,53 @@
 [[introduction]]
-= Introduction
+= Вступление
 
-The RPM Packaging Guide documents:
+Руководство по упаковке RPM пакетов:
 
-How to prepare source code for packaging into an RPM.:: This is for people with
-no background in software development. See
+Как подготовить исходный код для упаковки в RPM.:: Для тех, кто не имеет опыта разработки программного обеспечения.
 xref:preparing-software-for-packaging[].
 
-How to package source code into an RPM.:: This is for software developers who
-need to package software into RPMs. See xref:packaging-software[].
+Как упаковать исходный код в RPM.:: Это для разработчиков программного обеспечения, которым необходимо упаковать программное обеспечение в RPMs. xref:packaging-software[].
 
-Advanced packaging scenarios.:: This is a reference material for RPM packagers
-dealing with advanced RPM Packaging scenarios. See xref:advanced-topics[].
+Расширенные сценарии упаковки.:: Это справочный материал для упаковщиков RPM, работающих с расширенными сценариями упаковки RPM.                
+ xref:advanced-topics[].
 
 ifdef::community[]
 [[pdf-version]]
-== PDF Version
+== PDF Версия
 
-You can also download a
-https://rpm-packaging-guide.github.io/rpm-packaging-guide.pdf[PDF version of
-this document].
+Вы также можете скачать
+https://rpm-packaging-guide.github.io/rpm-packaging-guide.pdf[PDF версию
+данного документа].
 endif::community[]
 
 [[document-conventions]]
-== Document Conventions
+== Файловая структура
 
-The document uses the following conventions:
+Перед тем, как приступить к сборке, нужно создать структуру каталогов, необходимую RPM, находящуюся в Вашем «домашнем» каталоге:
 
-* Command output and contents of text files, including source code, are placed
-in blocks:
+* Выходные данные команд и содержимое текстовых файлов, включая исходный код, размещаются в блоках:
+
 +
+
 [source,bash]
 ----
 $ tree ~/rpmbuild/
 /home/user/rpmbuild/
 |-- BUILD
+|-- BUILDROOT
 |-- RPMS
+|   |-- i586
+|   |-- x86_64
+|   `-- noarch
+|-- SOURCES
+|-- SPECS
+`-- SRPMS
 
 [command output trimmed]
 ----
+
 +
+
 [source,txt]
 ----
 Name:           bello
@@ -49,6 +57,9 @@ Summary:
 
 [file contents trimmed]
 ----
+
+
+
 +
 [source,python]
 ----
@@ -57,14 +68,12 @@ Summary:
 print("Hello World")
 ----
 
-* Topics of interest or vocabulary terms are referred to either as URLs to their
-respective documentation or website, in **bold**, or in __italics__.
+* Темы, представляющие интерес, или словарные термины упоминаются либо как ссылки на соответствующую документацию или веб-сайт, выделенные **жирным** шрифтом, либо __курсивом__. Первые упоминания некоторых терминов ссылаются на соответствующую документацию.
 ifdef::community[]
 The first occurrences of some terms link to their respective documentation.
 endif::community[]
 
-*   Names of utilities, commands, and things normally found in code are written in
-``monospace`` font.
+* Названия утилит, команд и других элементов, обычно встречающихся в коде, написаны ``моноширинным`` шрифтом.
 
 ifdef::community[]
 include::contributing-to-this-guide.adoc[leveloffset=+1]
