@@ -1,5 +1,5 @@
 [[contributing-to-this-guide]]
-= Contributing to this guide
+= Вклад в руководство
 
 Вы можете внести свой вклад в это руководство, отправив сообщение о проблеме или запрос на извлечение наn
 https://github.com/redhat-developer/rpm-packaging-guide[ GitHub репозиторий].
