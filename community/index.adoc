@@ -1,5 +1,5 @@
-= RPM Packaging Guide
-Adam Miller, Maxim Svistunov, Marie Doleželová, et al.
+= Руководство по сборке RPM пакетов
+Adam Miller, Maxim Svistunov, Marie Doleželová, и другие.
 :imagesdir: images
 :toc: left
 :toclevels: 3

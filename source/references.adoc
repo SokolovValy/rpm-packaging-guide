@@ -1,9 +1,7 @@
 [appendix]
-= References
+= Ссылки на источники
 
-Below are references to various topics of interest around RPMs, RPM packaging,
-and RPM building. Some of these are advanced and extend far beyond the
-introductory material included in this guide.
+Ниже приведены ссылки на различные темы, представляющие интерес для RPM, упаковки RPM и построения RPM. Некоторые из них являются продвинутыми и выходят далеко за рамки вводного материала, включенного в данное руководство.
 
 ifdef::rhel[]
 
@@ -14,7 +12,7 @@ provides continuously updated development tools in latest stable versions.
 link:https://access.redhat.com/documentation/en-us/red_hat_software_collections/3/html/packaging_guide/[Red
 Hat Software Collections] - The Packaging Guide provides an explanation of
 Software Collections and details how to build and package them. Developers and
-system administrators with basic understanding of software packaging with RPM
+system administrators with basic understanding of software      packaging with RPM
 can use this Guide to get started with Software Collections.
 
 link:https://rpm-packaging-guide.github.io/#mock[Mock] - Mock provides a
@@ -26,25 +24,24 @@ endif::rhel[]
 ifdef::community[]
 
 link:https://www.softwarecollections.org/en/[Software Collections] -
-SoftwareCollections.org is an open-source project for building and distributing
-community-supported Software Collections (SCLs) for Red Hat Enterprise Linux,
-Fedora, CentOS, and Scientific Linux.
+SoftwareCollections.org это проект с открытым исходным кодом для создания и распространения поддерживаемых сообществом коллекций программного обеспечения (SCL) для Red Hat Enterprise Linux,
+Fedora, CentOS, и Scientific Linux.
 
 link:https://docs.fedoraproject.org/en-US/quick-docs/creating-rpm-packages/index.html[Creating
-RPM package] - Step-by-step guide for learning basics of RPM packaging.
+RPM package] - Пошаговое руководство по изучению основ упаковки RPM.
 
 link:http://www.ibm.com/developerworks/library/l-rpm1/[Packaging software with
 RPM, Part 1], link:http://www.ibm.com/developerworks/library/l-rpm2/[Part 2],
-link:http://www.ibm.com/developerworks/library/l-rpm3/[Part 3] - IBM RPM
-packaging guide.
+link:http://www.ibm.com/developerworks/library/l-rpm3/[Part 3] - 
+Руководство по упаковке IBM RPM.
 
 endif::community[]
 
-link:http://rpm.org/documentation[RPM Documentation] - The official RPM
-documentation.
+link:http://rpm.org/documentation[RPM Documentation] - 
+Официальная документация RPM.
 
 link:https://docs.fedoraproject.org/en-US/packaging-guidelines/[Fedora Packaging
-Guidelines] - The official packaging guidelines for Fedora, useful for all
-RPM-based distributions.
+Guidelines] - 
+Официальные рекомендации по упаковке для Fedora, полезные для всех дистрибутивов на основе RPM.
 
-link:https://pagure.io/rpmfluff[rpmfluff] - python library for building RPM packages, and sabotaging them so they are broken in controlled ways.
+link:https://pagure.io/rpmfluff[rpmfluff] - библиотека python для создания пакетов RPM и их саботажа, чтобы они были взломаны контролируемыми способами.

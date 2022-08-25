@@ -290,8 +290,8 @@ Hello World
 [[raw-interpreted]]
 ==== Необработанный интерпретируемый код
 
-In this example, you will raw-interpret the ``bello`` program written in the
-https://www.gnu.org/software/bash/[bash] shell built-in language.
+В этом примере вы будете интерпретировать программу ``bello`` написанную на встроенном языке оболочки
+https://www.gnu.org/software/bash/[bash].
 
 ``bello``
 
@@ -303,8 +303,8 @@ printf "Hello World\n"
 
 ----
 
-Programs written in shell scripting languages, like _bash_, are raw-interpreted.
-Hence, you only need to make the file with source code executable and run it:
+Программы, написанные на языках сценариев оболочки, таких как  _bash_, интерпретируются в необработанном виде.
+Следовательно, вам нужно только сделать файл с исходным кодом исполняемым и запустить его:
 
 [source,bash]
 ----
@@ -315,27 +315,20 @@ Hello World
 ----
 
 [[patching-software]]
-== Patching Software
+== Программное обеспечение для исправления ошибок
 
-A **patch** is source code that updates other source code. It is formatted as a
-__diff__, because it represents what is different between two versions of text.
-A __diff__ is created using the ``diff`` utility, which is then applied to the
-source code using the http://savannah.gnu.org/projects/patch/[patch] utility.
+**Patch** - это исходный код, который исправляет другой исходный код. Он отформатирован как __diff__, потому что представляет разницу между двумя версиями текста. Разница создаётся с помощью утилиты ``diff``, которая затем применяется к исходному коду с помощью утилиты http://savannah.gnu.org/projects/patch/[patch].
 
-NOTE: Software developers often use Version Control Systems such as
-https://git-scm.com/[git] to manage their code base. Such tools provide their
-own methods of creating diffs or patching software.
+NOTE: Разработчики программного обеспечения часто используют системы контроля версий, такие как https://git-scm.com/[git], для управления своей кодовой базой. Такие инструменты предоставляют свои собственные методы создания различий или исправления программного обеспечения.
 
-In the following example, we create a patch from the original source code using
-``diff`` and then apply it using ``patch``. Patching is used in a later section
-when creating an RPM, xref:working-with-spec-files[].
+В следующем примере мы создаем исправление из исходного исходного кода с помощью 
+``diff``, а затем используем ``patch``. Исправление использует в следующих разделяах при создании RPM и работе со .spec-файлом. xref:working-with-spec-files[].
 
-How is patching related to RPM packaging? In packaging, instead of simply
-modifying the original source code, we keep it, and use patches on it.
+Как исправление связано с упаковкой RPM? В упаковке, вместо того, чтобы просто изменять исходный исходный код, мы сохраняем его и используем на нем исправления.
 
-To create a patch for ``cello.c``:
+Чтобы создать патч для ``cello.c``:
 
-. Preserve the original source code:
+. Сохраним оригинальный исходный код:
 +
 [source,bash]
 ----
@@ -343,9 +336,9 @@ $ cp cello.c cello.c.orig
 
 ----
 +
-This is a common way to preserve the original source code file.
+Это наиболее распространённый способ сохранить файл исходного кода
 +
-. Change ``cello.c``:
+. Изменим``cello.c``:
 +
 [source,c]
 ----
@@ -358,10 +351,9 @@ int main(void) {
 
 ----
 +
-. Generate a patch using the ``diff`` utility:
+. Сгенерируем патч используя утилиту ``diff``:
 +
-NOTE: We use several common arguments for the ``diff`` utility. For more
-information on them, see the ``diff`` manual page.
+NOTE: Мы используем несколько общих аргументов для утилиты ``diff``. Для получения дополнительной информации о них см. руководство по использованию ``diff``.
 +
 [source,diff]
 ----
@@ -378,29 +370,26 @@ $ diff -Naur cello.c.orig cello.c
  }
 ----
 +
-Lines starting with a ``-`` are removed from the original source code and
-replaced with the lines that start with ``+``.
+Строки, начинающиеся с ``-`` удалятся из исходного кода и заменятся на строки, начинающихся с  ``+``.
 +
-. Save the patch to a file:
+. Сохраним патч в файл:
 +
 [source,bash]
 ----
 $ diff -Naur cello.c.orig cello.c > cello-output-first-patch.patch
 ----
 +
-. Restore the original ``cello.c``:
+. Восстановим исходный код ``cello.c``:
 +
 [source,bash]
 ----
 $ cp cello.c.orig cello.c
 ----
 +
-We retain the original ``cello.c``, because when an RPM is built, the original
-file is used, not a modified one. For more information, see
-xref:working-with-spec-files[].
+Мы сохраняем исходный файл ``cello.c``, потому что при создании RPM используется исходный файл, а не измененный. Дополнительные сведения см. в разделе
+xref:Работа со SPEC-файлом[].
 
-To patch ``cello.c`` using ``cello-output-first-patch.patch``, redirect the
-patch file to the ``patch`` command:
+Чтобы исправить ``cello.c`` с помощью ``cello-output-first-patch.patch``, перенаправьте патч-файл ``patch`` коммандой:
 
 [source,bash]
 ----
@@ -408,7 +397,7 @@ $ patch < cello-output-first-patch.patch
 patching file cello.c
 ----
 
-The contents of ``cello.c`` now reflect the patch:
+Содержимое ``cello.c`` теперь отражает изменения:
 
 [source,bash]
 ----
@@ -421,7 +410,7 @@ int main(void){
 }
 ----
 
-To build and run the patched ``cello.c``:
+Чтобы собрать и запустить отредактированную ``cello.c``:
 
 [source,bash]
 ----
@@ -435,51 +424,39 @@ $ ./cello
 Hello World from my very first patch!
 ----
 
-You have created a patch, patched a program, built the patched program, and run
-it.
+Вы создали патч, отредактировали программу, собрали отредактированную программу и запустили её.
 
 [[installing-arbitrary-artifacts]]
-== Installing Arbitrary Artifacts
+== Установка Произвольных Артефактов
 
-A big advantage of
+Большим преимуществом
 ifdef::community[https://en.wikipedia.org/wiki/Linux[Linux]]
 ifdef::rhel[Linux]
-and other Unix-like systems is the
-ifdef::community[https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard[Filesystem Hierarchy Standard]]
-ifdef::rhel[Filesystem Hierarchy Standard]
-(FHS). It specifies in which directory which files should be located. Files installed from
-the RPM packages should be placed according to FHS. For example, an executable
-file should go into a directory that is in the system
+и других Unix-подобных систем является 
+ifdef::community[https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard[Стандарт иерархии файловой системы]]
+ifdef::rhel[Стандарт иерархии файловой системы] 
+. Он указывает, в каком каталоге должны быть расположены файлы. 
+Файлы, установленные из пакетов RPM, должны быть размещены в соответствии с ИФС. Например, исполняемый файл должен находиться в каталоге, который находится в переменной 
 ifdef::community[https://en.wikipedia.org/wiki/PATH_%28variable%29[PATH]]
 ifdef::rhel[PATH]
-variable.
+.
 
-In the context of this guide, an __Arbitrary Artifact__ is anything installed
-from an RPM to the system. For RPM and for the system it can be a script, a
-binary compiled from the package's source code, a pre-compiled binary, or any
-other file.
 
-We will explore two popular ways of placing __Arbitrary Artifacts__ in the
-system: using the ``install`` command and using the ``make install`` command.
+В контексте этого руководства, __Произвольный артефакт__ - это все, что устанавливается из RPM в систему. Для RPM и для системы это может быть скрипт, двоичный файл, скомпилированный из исходного кода пакета, предварительно скомпилированный двоичный файл или любой другой файл.
+
+Мы рассмотрим два популярных способа размещения __произвольных артефактов__ в системе: с помощью команды ``install`` и с помощью команды ``make install``.
+
 
 [[install-command]]
-=== Using the install command
+=== Использование команды install
 
-Sometimes using build automation tooling such as
-http://www.gnu.org/software/make/[GNU make] is not optimal - for example, if the
-packaged program is simple and does not need extra overhead. In these cases,
-packagers often use the ``install`` command (provided to the system by
-http://www.gnu.org/software/coreutils/coreutils.html[coreutils]), which places
-the artifact to the specified directory in the filesystem with a specified set
-of permissions.
+Иногда с помощью инструментов автоматизации сборки, таких как
+http://www.gnu.org/software/make/[GNU make] не является оптимальным - например, если упакованная программа проста. В этих случаях упаковщики часто используют команду ``install`` (предоставляемая системе
+http://www.gnu.org/software/coreutils/coreutils.html[coreutils]), которая помещает артефакт в указанный каталог в файловой системе с указанным набором разрешений.
 
-The example below is going to use the ``bello`` file that we had previously
-created as the arbitrary artifact subject to our installation method. Note that
-you will either need http://www.sudo.ws/[sudo] permissions or run this command
-as root excluding the ``sudo`` portion of the command.
+В приведенном ниже примере будет использоваться файл ``bello``  который мы ранее создали в качестве произвольного артефакта, зависящего от нашего метода установки.  Обратите внимание, что вам либо понадобятся разрешения  http://www.sudo.ws/[sudo], либо запустите эту команду от имени root, исключая часть команды ``sudo``.
 
-In this example, ``install`` places the ``bello`` file into ``/usr/bin`` with
-permissions common for executable scripts:
+В этом примере ``install`` помещает файл ``bello`` в ``/usr/bin`` с разрешениями, общими для исполняемых скриптов:
 
 [source,bash]
 ----
@@ -487,11 +464,10 @@ $ sudo install -m 0755 bello /usr/bin/bello
 
 ----
 
-Now ``bello`` is in a directory that is listed in the
+Теперь``bello`` находится в каталоге, который указан в переменной 
 ifdef::community[https://en.wikipedia.org/wiki/PATH_%28variable%29[$PATH]]
 ifdef::rhel[$PATH]
-variable. Therefore,
-you can execute ``bello`` from any directory without specifying its full path:
+. Таким образом, Вы можете запустить ``bello`` из любого каталога, не указывая его путь:
 
 [source,bash]
 ----
@@ -503,15 +479,13 @@ Hello World
 ----
 
 [[make-install]]
-=== Using the make install command
+=== Использование команды make install
 
-A popular automated way to install built software to the system is to use the
-``make install`` command. It requires you to specify how to install the
-arbitrary artifacts to the system in the ``Makefile``.
+Популярным автоматизированным способом установки встроенного программного обеспечения в систему является использование команды ``make install``. Вы указываете, как установить произвольные артефакты в систему в файле ``Makefile``.
 
-NOTE: Usually ``Makefile`` is written by the developer and not by the packager.
+NOTE: Обычно ``Makefile`` пишется разработчиком, а не упаковщиком. 
 
-Add the ``install`` section to the ``Makefile``:
+Добавьте секцию ``install`` в ``Makefile``:
 
 ``Makefile``
 
@@ -529,15 +503,13 @@ install:
 
 ----
 
-The https://www.gnu.org/software/make/manual/html_node/DESTDIR.html[$(DESTDIR)]
-variable is a http://www.gnu.org/software/make/[GNU make] built-in and is
-commonly used to specify installation to a directory different than the root
-directory.
+Переменная https://www.gnu.org/software/make/manual/html_node/DESTDIR.html[$(DESTDIR)]
+является встроенной в  http://www.gnu.org/software/make/[GNU make] и обычно используется для указания установки в каталог, отличный от корневого каталога.
 
-Now you can use ``Makefile`` not only to build software, but also to install it
-to the target system.
+Теперь вы можете использовать ``Makefile`` не только для создания программного обеспечения, но и для его установки в целевую систему.
 
-To build and install the ``cello.c`` program:
+
+Для сборки и установки программы ``cello.c``:
 
 [source,bash]
 ----
@@ -549,11 +521,10 @@ install -m 0755 cello /usr/bin/cello
 
 ----
 
-Now ``cello`` is in a directory that is listed in the
+Теперь``cello`` находится в каталоге, который указан в переменной
 ifdef::community[https://en.wikipedia.org/wiki/PATH_%28variable%29[$PATH]]
 ifdef::rhel[$PATH]
-variable. Therefore,
-you can execute ``cello`` from any directory without specifying its full path:
+. Таким образом, Вы можете запустить ``cello`` из любого каталога, не указывая его полный путь. 
 
 [source,bash]
 ----
@@ -564,31 +535,24 @@ Hello World
 
 ----
 
-You have installed a build artifact into a chosen location on the system.
+Вы установили артефакт сборки в выбранное место в системе.
 
 [[preparing-source-code-for-packaging]]
-== Preparing Source Code for Packaging
+== Подготовка исходного кода для упаковки
 
-NOTE: The code created in this section can be found
-https://github.com/redhat-developer/rpm-packaging-guide/tree/master/example-code[here].
+NOTE: Код, созданный в этом разделе, можно найти
+https://github.com/redhat-developer/rpm-packaging-guide/tree/master/example-code[здесь].
 
-Developers often distribute software as compressed archives of source code,
-which are then used to create packages. In this section, you will create such
-compressed archives.
+Разработчики часто распространяют программное обеспечение в виде сжатых архивов исходного кода, которые затем используются для создания пакетов. В этом разделе Вы создадите такие архивы.
 
-NOTE: Creating source code archives is not normally done by the RPM Packager,
-but by the developer. The packager works with a ready source code archive.
+NOTE: Создание архивов исходного кода обычно выполняется не RPM-упаковщиком, а разработчиком. Упаковщик работает с готовым архивом исходного кода.
 
-Software should be distributed with a
-ifdef::community[https://en.wikipedia.org/wiki/Software_license[software license]]
-ifdef::rhel[software license]
-. For the
-examples, we will use the
-https://www.gnu.org/licenses/quick-guide-gplv3.html[GPLv3] license. The license
-text goes into the ``LICENSE`` file for each of the example programs. An RPM
-packager needs to deal with license files when packaging.
+Программное обеспечение должно распространяться с 
+https://en.wikipedia.org/wiki/Software_license[лицензией]
+. Для примера мы будем использовать лицензию 
+https://www.gnu.org/licenses/quick-guide-gplv3.html[GPLv3]. Текст лицензии помещается в файл ``LICENSE``, для каждой из примеров программ. Упаковщику RPM необходимо иметь дело с файлами лицензий при упаковке.
 
-For use with the following examples, create a ``LICENSE`` file:
+Для использования со следующими примерами создайте файл  ``LICENSE``:
 
 [source,bash]
 ----
@@ -609,24 +573,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ----
 
 [[putting-source-code-into-tarball]]
-== Putting Source Code into Tarball
+== Создание Tarball с исходным кодом
 
-In the examples below, we put each of the three ``Hello World`` programs into a
-https://www.gnu.org/software/gzip/[gzip]-compressed tarball. Software is often
-released this way to be later packaged for distribution.
+В приведенных ниже примерах мы помещаем каждую из трех программ  ``Hello World`` в архив, сжатый с помощью
+https://www.gnu.org/software/gzip/[gzip]. Программное обеспечение часто выпускается таким образом, чтобы позже быть упакованным для распространения.
 
 [[bello]]
 === bello
 
-The __bello__ project implements ``Hello World`` in
-https://www.gnu.org/software/bash/[bash]. The implementation only contains the
-``bello`` shell script, so the resulting ``tar.gz`` archive will have only one
-file apart from the ``LICENSE`` file. Let us assume that this is version ``0.1``
-of the program.
+Проект __bello__ реализует ``Hello World`` в
+https://www.gnu.org/software/bash/[bash]. Реализация содержит только сценарий оболочки ``bello``, поэтому результирующий  ``tar.gz`` aархив будет содержать только один файл, кроме файла  ``LICENSE``. Давайте предположим, что это версия программы - ``0.1``
 
-Prepare the __bello__ project for distribution:
+Подготовьте проект __bello__ для распространения:
 
-. Put the files into a single directory:
+. Поместите файлы в один каталог:
 +
 [source,bash]
 ----
@@ -638,7 +598,7 @@ $ cp /tmp/LICENSE /tmp/bello-0.1/
 
 ----
 
-. Create the archive for distribution and move it to ``~/rpmbuild/SOURCES/``:
+. Создайте архив для распространения и переместите его в ``~/rpmbuild/SOURCES/``:
 +
 [source,bash]
 ----
@@ -656,15 +616,14 @@ $ mv /tmp/bello-0.1.tar.gz ~/rpmbuild/SOURCES/
 [[pello]]
 === pello
 
-The __pello__ project implements ``Hello World`` in
-https://www.python.org/[Python]. The implementation only contains the
-``pello.py`` program, so the resulting ``tar.gz`` archive will have only one
-file apart from the ``LICENSE`` file. Let us assume that this is version
-``0.1.1`` of the program.
+Проект __pello__ реализует ``Hello World`` на
+https://www.python.org/[Python]. Реализация содержит только программу
+``pello.py``, так что результирующий ``tar.gz`` будет содержать только один файл, кроме файла  ``LICENSE``. Предположим, что это версия программы -
+``0.1.1``
 
 Prepare the __pello__ project for distribution:
 
-. Put the files into a single directory:
+. Поместите файлы в один каталог:
 +
 [source,bash]
 ----
@@ -676,7 +635,7 @@ $ cp /tmp/LICENSE /tmp/pello-0.1.1/
 
 ----
 
-. Create the archive for distribution and move it to ``~/rpmbuild/SOURCES/``:
+. Создайте архив для распространения и переместите его вo ``~/rpmbuild/SOURCES/``:
 +
 [source,bash]
 ----
@@ -694,22 +653,19 @@ $ mv /tmp/pello-0.1.1.tar.gz ~/rpmbuild/SOURCES/
 [[cello]]
 === cello
 
-The __cello__ project implements ``Hello World`` in
+Проект __cello__ реализует ``Hello World`` на
 ifdef::community[https://en.wikipedia.org/wiki/C_%28programming_language%29[C]]
 ifdef::rhel[C]
-. The implementation only contains the ``cello.c`` and
-``Makefile`` files, so the resulting ``tar.gz`` archive will have only two files
-apart from the ``LICENSE`` file. Let us assume that this is version ``1.0`` of
-the program.
+. Реализация содержит только файлы ``cello.c`` и
+``Makefile``, поэтому результирующий ``tar.gz`` архив будет содержать только два файла, кроме файла ``LICENSE``. Давайте предположим, что это версия программы - ``1.0``
 
-Note that the ``patch`` file is not distributed in the archive with the program.
-The RPM Packager applies the patch when the RPM is built. The patch will be
-placed in the ``~/rpmbuild/SOURCES/`` directory alongside the ``.tar.gz``.
+Обратите внимание, что ``patch`` не распространяется в архиве вместе с программой. 
+Упаковщик RPM применяет исправление при создании RPM. Патч будет помещен в каталог ``~/rpmbuild/SOURCES/`` рядом с ``.tar.gz``.
 
 Prepare the __cello__ project for distribution:
 
 
-. Put the files into a single directory:
+. Поместите файлы в один каталог::
 +
 [source,bash]
 ----
@@ -723,7 +679,7 @@ $ cp /tmp/LICENSE /tmp/cello-1.0/
 
 ----
 
-. Create the archive for distribution and move it to ``~/rpmbuild/SOURCES/``:
+. Создайте архив для распространения и переместите его в  ``~/rpmbuild/SOURCES/``:
 +
 [source,bash]
 ----
@@ -739,7 +695,7 @@ $ mv /tmp/cello-1.0.tar.gz ~/rpmbuild/SOURCES/
 
 ----
 
-. Add the patch:
+. Добавьте патч:
 +
 [source,bash]
 ----
@@ -747,4 +703,4 @@ $ mv ~/cello-output-first-patch.patch ~/rpmbuild/SOURCES/
 
 ----
 
-Now the source code is ready for packaging into an RPM.
+Теперь исходный код готов к упаковке в RPM.
