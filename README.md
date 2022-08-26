@@ -13,7 +13,7 @@ The document itself was originally written in
 published at http://rpm-guide.readthedocs.io/en/latest/.
 
 Later, the document was converted to AsciiDoc and is published at
-[https://rpm-packaging-guide.github.io/](https://rpm-packaging-guide.github.io/).
+[https://rpm-packaging-guide-ru.github.io/](https://rpm-packaging-guide-ru.github.io/).
 
 You can find the document topic pages in the `source` directory in this Git
 repository. The `community` and `rhel` directories contain index pages for an
@@ -42,10 +42,10 @@ version build, so you don't need an extra tool installed locally in order to
 publish an update to the document. When the Asciidoctor container running in
 Travis CI successfully finishes the build, Travis CI pushes the resulting HTML
 and PDF to a staging repository
-[https://github.com/rpm-packaging-guide/rpm-packaging-guide.github.io](https://github.com/rpm-packaging-guide/rpm-packaging-guide.github.io),
+[https://github.com/rpm-packaging-guide-ru/rpm-packaging-guide-ru.github.io](https://github.com/rpm-packaging-guide-ru/rpm-packaging-guide-ru.github.io),
 and GitHub Pages then publishes the HTML and PDF to
-[https://rpm-packaging-guide.github.io/](https://rpm-packaging-guide.github.io/)
-and [https://rpm-packaging-guide.github.io/rpm-packaging-guide.pdf](https://rpm-packaging-guide.github.io/rpm-packaging-guide.pdf).
+[https://rpm-packaging-guide-ru.github.io/](https://rpm-packaging-guide-ru.github.io/)
+and [https://rpm-packaging-guide-ru.github.io/rpm-packaging-guide-ru.pdf](https://rpm-packaging-guide-ru.github.io/rpm-packaging-guide-ru.pdf).
 
 ## Licensing
 
