@@ -29,7 +29,7 @@ deploy:
   skip_cleanup: true
   github_token: $GH_TOKEN
   local_dir: output
-  repo: rpm-packaging-guide/rpm-packaging-guide.github.io
+  repo: rpm-packaging-guide-ru/rpm-packaging-guide-ru.github.io
   target_branch: master
   on:
     branch: master
