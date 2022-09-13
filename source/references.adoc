@@ -1,23 +1,21 @@
 [appendix]
 = Ссылки на источники
 
-Ниже приведены ссылки на различные темы, представляющие интерес для RPM, упаковки RPM и построения RPM. Некоторые из них являются продвинутыми и выходят далеко за рамки вводного материала, включенного в данное руководство.
+Ниже приведены ссылки на различные темы, представляющие интерес для RPM, упаковки RPM и сборки RPM. Некоторые из них являются продвинутыми и выходят далеко за рамки вводного материала, включённого в данное руководство.
 
 ifdef::rhel[]
 
 link:https://developers.redhat.com/products/softwarecollections/overview/[Red
-Hat Software Collections Overview] - The Red Hat Software Collections offering
-provides continuously updated development tools in latest stable versions.
+Hat Software Collections Overview] - Red Hat Software Collections предоставляет постоянно обновляемые инструменты разработки в последних стабильных версиях.
 
 link:https://access.redhat.com/documentation/en-us/red_hat_software_collections/3/html/packaging_guide/[Red
-Hat Software Collections] - The Packaging Guide provides an explanation of
-Software Collections and details how to build and package them. Developers and
-system administrators with basic understanding of software      packaging with RPM
-can use this Guide to get started with Software Collections.
+Hat Software Collections] - Руководство по упаковке дает объяснение о Software Collections, сборке и упаковке программ. Разработчики и
+системные администраторы, имеющие базовое представление об упаковке программного обеспечения с помощью RPM
+, могут использовать это руководство для начала работы с Software Collections.
 
-link:https://rpm-packaging-guide.github.io/#mock[Mock] - Mock provides a
-community-supported package building solution for various architectures and
-different Fedora or RHEL versions than has the build host.
+link:https://rpm-packaging-guide.github.io/#mock[Mock] - Mock предоставляет
+поддерживаемое сообществом решение для создания пакетов под различные архитектуры и
+версии Fedora или RHEL, отличных от хоста сборки.
 
 endif::rhel[]
 
