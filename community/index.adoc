@@ -6,6 +6,7 @@ Adam Miller, Maxim Svistunov, Marie Doleželová, и другие. Перево�
 :doctype: book
 :source-highlighter: coderay
 :community:
+:toc-title: Оглавление
 
 include::source/introduction.adoc[leveloffset=+1]
 
